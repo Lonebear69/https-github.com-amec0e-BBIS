@@ -1,0 +1,2 @@
+# BBIS
+BugBounty Install Script
