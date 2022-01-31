@@ -12,6 +12,8 @@ A script I wrote to help me automate the installation of tools I use for hunting
 . ./BBIS
 ```
 
+You do not need to use `sudo` unless you absolutely need to for some reason.
+
 ## NOTE For Oh-My-ZSH Users:
 
 Oh-my-zsh by default ships with the plug-in (git) enabled. All this does is add a bunch of alias's for git which one of which is gau `git add --update` 
