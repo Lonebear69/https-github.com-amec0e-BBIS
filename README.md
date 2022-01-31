@@ -3,7 +3,7 @@ BugBounty Install Script
 
 ## Description:
 
-A script I wrote to help me automate the installation of tools I use for hunting on a fresh Ubuntu/Raspberry Pi install.
+A script I wrote to help me automate the installation of tools I use for hunting on a fresh Ubuntu install.
 
 
 ## Usage:
