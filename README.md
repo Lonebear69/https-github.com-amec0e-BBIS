@@ -41,5 +41,5 @@ Either remove the git from plugins= in your .zshrc or rename the alias for gau b
 
  - python3-pip
  - git
- - goland
+ - golang
  - chromium-browser
