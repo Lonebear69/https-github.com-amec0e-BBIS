@@ -1,0 +1,487 @@
+#!/bin/bash
+
+# 
+# Usage . ./RBBIS
+# 
+# Functions List (For my Reference)
+# 
+# aliascheck, aptinstalls, goshellcheck, pip3pathcheck, makedirs, installaqua, installanew, installamass, installarjun, installcrawpy, installferox, installffuf, installgitjacker, installgittools, installgo, installgau, installhttprobe, installwordlists sver
+# 
+# 
+
+# Make Dirs
+
+makedirs () {
+	mkdir $HOME/Bugbounty
+	mkdir $HOME/Bugbounty/tools
+	mkdir $HOME/Bugbounty/wordlists
+	mkdir $HOME/Bugbounty/tools/aquatone
+	mkdir $HOME/Bugbounty/tools/anew
+	mkdir $HOME/Bugbounty/tools/amass
+	mkdir $HOME/Bugbounty/tools/feroxbuster
+	mkdir $HOME/Bugbounty/tools/ffuf
+	mkdir $HOME/Bugbounty/tools/gittools
+	mkdir $HOME/Bugbounty/tools/gau
+	mkdir $HOME/Bugbounty/tools/httprobe
+}
+
+# Check for default shell and add alias
+
+aliascheck () {
+
+# Check for .bashrc
+
+	if [ "$SHELL" = "/bin/bash" ] || [ "$SHELL" = "/usr/bin/bash" ] ; then
+		cat << EOF >> $HOME/.bashrc
+
+# BugBounty Alias's by BBIS
+
+alias anew='$HOME/Bugbounty/tools/anew/anew'
+alias amass='$HOME/Bugbounty/tools/amass/amass'
+alias aquatone='$HOME/Bugbounty/tools/aquatone/aquatone'
+alias crawpy='python3 $HOME/Bugbounty/tools/crawpy/crawpy.py'
+alias feroxbuster='$HOME/Bugbounty/tools/feroxbuster/feroxbuster'
+alias ffuf='$HOME/Bugbounty/tools/ffuf/ffuf'
+alias gittools-dumper='$HOME/Bugbounty/tools/gittools/dumper.sh'
+alias gittools-extractor='$HOME/Bugbounty/tools/gittools/extractor.sh'
+alias gau='$HOME/Bugbounty/tools/gau/gau'
+alias httprobe='$HOME/Bugbounty/tools/httprobe'
+EOF
+		source $HOME/.bashrc
+		echo
+		echo "Alias's Added!"
+	fi
+
+# Check for .zshrc
+	echo
+	echo "Adding Alias's to .zshrc"
+	if [ "$SHELL" = "/bin/.zshrc" ] || [ "$SHELL" = "/usr/bin/.zshrc" ] ; then
+		cat << EOF >> $HOME/.zshrc
+
+# BugBounty Alias's by BBIS
+
+alias anew='$HOME/Bugbounty/tools/anew/anew'
+alias amass='$HOME/Bugbounty/tools/amass/amass'
+alias aquatone='$HOME/Bugbounty/tools/aquatone/aquatone'
+alias crawpy='python3 $HOME/Bugbounty/tools/crawpy/crawpy.py'
+alias feroxbuster='$HOME/Bugbounty/tools/feroxbuster/feroxbuster'
+alias ffuf='$HOME/Bugbounty/tools/ffuf/ffuf'
+alias gittools-dumper='$HOME/Bugbounty/tools/gittools/dumper.sh'
+alias gittools-extractor='$HOME/Bugbounty/tools/gittools/extractor.sh'
+alias gau='$HOME/Bugbounty/tools/gau/gau'
+alias httprobe='$HOME/Bugbounty/tools/httprobe'
+EOF
+		source $HOME/.zshrc
+		echo
+		echo "Alias's added!"
+	fi
+}
+
+# apt install's
+
+aptinstalls () {
+	sudo apt update
+	sudo apt upgrade -y
+	sudo apt install chromium-browser -y
+	sudo apt install git -y
+	sudo apt install python3-pip -y
+	echo
+	echo "APT Requirements Installed!"
+}
+
+# Script Version
+
+sver () {
+	echo
+	echo "Version: 1.5"
+	echo
+}
+
+# Golang BASH and ZSH check for exporting path to the shell config file instead of .profile (For some reason on rebooting it doesn't export the path on login as it should hence exporting to .bashrc/.zshrc)
+
+goshellcheck () {
+
+# Check Bash Shell
+
+		echo "Checking if golang's bin is in the PATH + if default shell is Bash"
+		echo
+        if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/bash"  ] || [ "$SHELL" = "/usr/bin/bash" ] ; then
+			echo >> $HOME/.bashrc
+			echo '# Golangs bin PATH' >> $HOME/.bashrc
+			echo  >> $HOME/.bashrc
+			echo 'export PATH="/usr/local/go/bin:$PATH"' >> $HOME/.bashrc
+			source $HOME/.bashrc
+			echo "Golang Path Added"
+        else
+            echo "Your Currently Using $SHELL Skipping Check.."
+			echo
+        fi
+
+
+# Check Just for ZSH Shell
+
+		echo "Checking if golang's bin is in the PATH + if the default shell is ZSH"
+		echo
+        if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ] ; then
+			echo >> $HOME/.zshrc
+			echo '# Golangs bin PATH' >> $HOME/.zshrc
+			echo  >> $HOME/.zshrc
+			echo 'export PATH="/usr/local/go/bin:$PATH"' >> $HOME/.zshrc
+			source $HOME/.zshrc
+			echo "Golang Path Added"
+        else
+            echo "Your Currently Using $SHELL Skipping Check.."
+			echo
+        fi
+}
+
+# pip3 non-root path install check
+
+pip3pathcheck () {
+
+# Check to see if the PATH is already in the $PATH variable, if not, add it to either bash or zsh rc depending on whats detected
+
+	echo "Checking if HOME/.local/bin is already in the PATH + users default shell is Bash"
+	echo
+	if [[ :$PATH: != *:"$HOME/.local/bin":* ]] && [ "$SHELL" = "/bin/bash" ] || [ "$SHELL" = "/usr/bin/bash" ] ; then
+		echo >> $HOME/.bashrc
+		echo '# Pip3 non-root install PATH' >> $HOME/.bashrc
+		echo >> $HOME/.bashrc
+		echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
+		source $HOME/.bashrc
+		echo "Pip3 non-root install Path Added!"
+	else
+		echo "$HOME/.local/bin is already in the PATH"
+		echo
+	fi
+
+	echo "Checking if HOME/.local/bin is already in the PATH and users default shell is Bash"
+	echo
+	if  [[ :$PATH: != *:"$HOME/.local/bin":* ]] && [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ] ; then
+		echo >> $HOME/.zshrc
+		echo '# Pip3 non-root install PATH' >> $HOME/.zshrc
+		echo >> $HOME/.zshrc
+		echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.zshrc
+		source $HOME/.zshrc
+		echo "Pip3 non-root install Path Added!"
+	else
+		echo "$HOME/.local/bin is already in the PATH"
+		echo
+	fi
+}
+
+# Golang
+
+installgo () {
+	echo
+	echo "Installing Golang"
+	echo
+	cd /tmp
+	wget https://go.dev/dl/go1.17.6.linux-armv6l.tar.gz
+	sudo rm -rf /usr/local/go
+	sudo tar -C /usr/local -xzf go1.17.6.linux-armv6l.tar.gz
+	rm go1.17.6.linux-armv6l.tar.gz
+	cd $HOME
+	goshellcheck
+	echo
+	echo "Golang Installed!"
+}
+
+# Arjun
+
+installarjun () {
+	echo
+	echo "Installing Arjun"
+	echo
+	pip3 install arjun
+	echo
+	echo "Arjun Installed!"
+}
+
+# FeroxBuster
+
+installferox () {
+	echo
+	echo "Installing Feroxbuster"
+	echo
+	curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/master/install-nix.sh | bash
+	mv feroxbuster $HOME/Bugbounty/tools/feroxbuster/
+	echo
+	echo "Feroxbuster Installed!"
+}
+
+# ffuf (from compiler)
+
+installffuf () {
+	echo
+	echo "Installing Ffuf"
+	echo
+	go install github.com/ffuf/ffuf@latest
+	mv $HOME/go/bin/ffuf $HOME/Bugbounty/tools/ffuf/
+	sudo rm -rf $HOME/go/
+	echo
+	echo "Ffuf Installed!"
+}
+
+# Crawpy (ffuf in python3)
+
+installcrawpy () {
+	echo
+	echo "Installing Crawpy"
+	echo
+	git clone https://github.com/morph3/crawpy
+	cd crawpy
+	pip3 install -r requirements.txt
+	rm -rf .git .gitignore README.md
+	cd $HOME
+	mv $HOME/crawpy $HOME/Bugbounty/tools/
+	echo
+	echo "Crawpy Installed!"
+}
+
+# HTTProbe
+
+installhttprobe () {
+	echo
+	echo "Installing HTTProbe"
+	echo
+	go install github.com/tomnomnom/httprobe@latest
+	mv $HOME/go/bin/httprobe $HOME/Bugbounty/tools/httprobe/
+	sudo rm -rf $HOME/go/
+	echo
+	echo "Httprobe Installed!"
+}
+
+# Aquatone
+
+installaqua () {
+	echo
+	echo "Installing Aquatone"
+	echo
+	cd /tmp
+	wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_arm64_1.7.0.zip
+	unzip aquatone_linux_arm64_1.7.0.zip
+	rm LICENSE.txt README.md aquatone_linux_arm64_1.7.0.zip
+	mv aquatone $HOME/Bugbounty/tools/aquatone/
+	cd $HOME
+	echo
+	echo "Aquatone Installed!"
+}
+
+# Anew
+
+installanew () {
+	echo
+	echo "Installing Anew"
+	echo
+	cd $HOME
+	go install github.com/tomnomnom/anew@latest
+	mv go/bin/anew $HOME/Bugbounty/tools/anew/
+	sudo rm -rf $HOME/go/
+	echo
+	echo "Anew Installed!"
+}
+
+# Amass
+
+installamass () {
+	echo
+	echo "Installing Amass"
+	echo
+	go install -v github.com/OWASP/Amass/v3/...@master
+	mv $HOME/go/bin/amass $HOME/Bugbounty/tools/amass/
+	sudo rm -rf $HOME/go/
+	echo
+	echo "Amass Installed!"
+}
+
+# GetAllUrls (gau)
+
+installgau () {
+	echo
+	echo "Installing Gau"
+	echo 
+	go install github.com/lc/gau/v2/cmd/gau@latest
+	mv $HOME/go/bin/gau $HOME/Bugbounty/tools/gau/
+	sudo rm -rf $HOME/go
+	echo
+	echo "Gau Installed!"
+	
+}
+
+# GitTools
+
+installgittools () {
+	echo
+	echo "Installing GitTools"
+	echo
+	cd /tmp
+	git clone https://github.com/internetwache/GitTools
+	cd GitTools
+	mv Dumper/gitdumper.sh $HOME/Bugbounty/tools/gittools/dumper.sh
+	mv Extractor/extractor.sh $HOME/Bugbounty/tools/gittools/extractor.sh
+	cd /tmp
+	rm -rf GitTools
+	cd $HOME
+	echo
+	echo "GitTools Installed!"
+}
+
+
+# ------
+
+# Wordlists
+
+installwordlists () {
+	# Assetnote
+	
+	echo
+	echo "Downloading Assetnote"
+	echo
+	cd $HOME/Bugbounty/wordlists
+	echo "Downloading Assetnote top 1m parameters"
+	wget https://wordlists-cdn.assetnote.io/data/automated/httparchive_parameters_top_1m_2020_11_21.txt
+	echo
+	echo "Assetnote Installed!"
+	
+	# Seclists
+	
+	echo
+	echo "Downloading Seclists"
+	echo
+	git clone https://github.com/danielmiessler/SecLists.git
+	cd SecLists
+	rm -rf .git .bin .gitignore .gitattributes README.md LICENSE CONTRIBUTING.md CONTRIBUTORS.md
+	cd $HOME
+	echo
+	echo "Seclists Installed!"
+	
+}
+
+topmenu () {
+echo 
+echo "		~~MAIN MENU~~"
+echo 
+PS3='Please select an option: '
+choices=("Prepare Directories" "Add Alias's" "Install Wordlists" "Install APT Requirements" "Install Golang" "Tools Menu" "Do EVERYTHING" "Script Version" "Exit")
+select choice in "${choices[@]}"; do
+	case $choice in
+	    "Prepare Directories")
+			makedirs
+	        ;;
+		"Add Alias's")
+			aliascheck
+			;;
+	    "Install Wordlists")
+			wordlists
+			;;
+		"Install APT Requirements")
+			aptinstalls
+			;;
+		"Install Golang")
+			installgo
+			;;
+		"Tools Menu")
+	        toolsmenu
+			;;
+		"Do EVERYTHING")
+			echo
+			echo "Buckle Up.."
+			echo
+			sleep 1
+			aptinstalls
+			makedirs
+			pip3pathcheck
+			installgo
+			installanew
+			installamass
+			installaqua
+			installarjun
+			installcrawpy
+			installferox
+			installffuf
+			installgau
+			installgittools
+			installhttprobe
+			installwordlists
+			aliascheck
+			;;
+		"Script Version")
+			sver
+	        ;;
+	"Exit")
+		echo "Exiting.."
+		exit
+		;;
+        *) echo "invalid option $REPLY";;
+    esac
+done
+}
+
+toolsmenu () {
+echo
+echo "		~~TOOLS MENU~~"
+echo 
+PS3='Please select an option: '
+choices=("Install Anew (Go)" "Install Amass" "Install Aquatone" "Install Arjun" "Install Crawpy" "Install Feroxbuster" "Install ffuf (Go)" "Install Gau (Go)" "Install GitTools" "Install HTTProbe (Go)" "Install ALL tools (REQUIRES GOLANG)" "Go Back")
+select choice in "${choices[@]}"; do
+	case $choice in
+		"Install Anew (Go)")
+			installanew
+	        ;;
+	    "Install Amass")
+ 	        installamass
+			;;
+		"Install Aquatone")
+			installaqua
+			;;
+		"Install Arjun")
+			installarjun
+			;;
+		"Install Crawpy")
+			installcrawpy
+			;;
+		"Install Feroxbuster")
+			installferox
+			;;
+		"Install ffuf (Go)")
+			installffuf
+			;;
+		"Install Gau (Go)")
+			installgau
+			;;
+		"Install GitTools")
+			installgittools
+			;;
+		"Install HTTProbe (Go)")
+			installhttprobe
+			;;
+		"Install ALL tools (REQUIRES GOLANG!)")
+			pip3pathcheck
+			installanew
+			installamass
+			installaqua
+			installarjun
+			installcrawpy
+			installferox
+			installffuf
+			installgau
+			installgittools
+			installhttprobe
+			installwordlists
+			aliascheck
+			;;
+		"Go Back")
+			topmenu
+		break
+	        ;;
+	    *) echo "invalid option $REPLY";;
+	esac
+done
+}
+
+echo
+echo "Welcome to Amec0es Raspberry Pi BugBounty Install Script (RBBIS) v1.5"
+echo
+
+topmenu
