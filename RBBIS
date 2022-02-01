@@ -103,36 +103,36 @@ goshellcheck () {
 
 # Check Bash Shell
 
-		echo "Checking if golang's bin is in the PATH + if default shell is Bash"
+	echo "Checking if golang's bin is in the PATH + if default shell is Bash"
+	echo
+	if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/bash"  ] || [ "$SHELL" = "/usr/bin/bash" ] ; then
+		echo >> $HOME/.bashrc
+		echo '# Golangs bin PATH' >> $HOME/.bashrc
+		echo  >> $HOME/.bashrc
+		echo 'export PATH="/usr/local/go/bin:$PATH"' >> $HOME/.bashrc
+		source $HOME/.bashrc
+		echo "Golang Path Added"
+	else
+		echo "Your Currently Using $SHELL Skipping Check.."
 		echo
-		if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/bash"  ] || [ "$SHELL" = "/usr/bin/bash" ] ; then
-			echo >> $HOME/.bashrc
-			echo '# Golangs bin PATH' >> $HOME/.bashrc
-			echo  >> $HOME/.bashrc
-			echo 'export PATH="/usr/local/go/bin:$PATH"' >> $HOME/.bashrc
-			source $HOME/.bashrc
-			echo "Golang Path Added"
-		else
-			echo "Your Currently Using $SHELL Skipping Check.."
-			echo
-		fi
+	fi
 
 
 # Check Just for ZSH Shell
 
-		echo "Checking if golang's bin is in the PATH + if the default shell is ZSH"
+	echo "Checking if golang's bin is in the PATH + if the default shell is ZSH"
+	echo
+	if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ] ; then
+		echo >> $HOME/.zshrc
+		echo '# Golangs bin PATH' >> $HOME/.zshrc
+		echo  >> $HOME/.zshrc
+		echo 'export PATH="/usr/local/go/bin:$PATH"' >> $HOME/.zshrc
+		source $HOME/.zshrc
+		echo "Golang Path Added"
+	else
+		echo "Your Currently Using $SHELL Skipping Check.."
 		echo
-		if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ] ; then
-			echo >> $HOME/.zshrc
-			echo '# Golangs bin PATH' >> $HOME/.zshrc
-			echo  >> $HOME/.zshrc
-			echo 'export PATH="/usr/local/go/bin:$PATH"' >> $HOME/.zshrc
-			source $HOME/.zshrc
-			echo "Golang Path Added"
-		else
-			echo "Your Currently Using $SHELL Skipping Check.."
-			echo
-		fi
+	fi
 }
 
 # pip3 non-root path install check
