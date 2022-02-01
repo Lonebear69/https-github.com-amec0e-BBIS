@@ -105,34 +105,34 @@ goshellcheck () {
 
 		echo "Checking if golang's bin is in the PATH + if default shell is Bash"
 		echo
-        if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/bash"  ] || [ "$SHELL" = "/usr/bin/bash" ] ; then
+		if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/bash"  ] || [ "$SHELL" = "/usr/bin/bash" ] ; then
 			echo >> $HOME/.bashrc
 			echo '# Golangs bin PATH' >> $HOME/.bashrc
 			echo  >> $HOME/.bashrc
 			echo 'export PATH="/usr/local/go/bin:$PATH"' >> $HOME/.bashrc
 			source $HOME/.bashrc
 			echo "Golang Path Added"
-        else
-            echo "Your Currently Using $SHELL Skipping Check.."
+		else
+			echo "Your Currently Using $SHELL Skipping Check.."
 			echo
-        fi
+		fi
 
 
 # Check Just for ZSH Shell
 
 		echo "Checking if golang's bin is in the PATH + if the default shell is ZSH"
 		echo
-        if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ] ; then
+		if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ] ; then
 			echo >> $HOME/.zshrc
 			echo '# Golangs bin PATH' >> $HOME/.zshrc
 			echo  >> $HOME/.zshrc
 			echo 'export PATH="/usr/local/go/bin:$PATH"' >> $HOME/.zshrc
 			source $HOME/.zshrc
 			echo "Golang Path Added"
-        else
-            echo "Your Currently Using $SHELL Skipping Check.."
+		else
+			echo "Your Currently Using $SHELL Skipping Check.."
 			echo
-        fi
+		fi
 }
 
 # pip3 non-root path install check
@@ -366,13 +366,13 @@ PS3='Please select an option: '
 choices=("Prepare Directories" "Add Alias's" "Install Wordlists" "Install APT Requirements" "Install Golang" "Tools Menu" "Do EVERYTHING" "Script Version" "Exit")
 select choice in "${choices[@]}"; do
 	case $choice in
-	    "Prepare Directories")
+		"Prepare Directories")
 			makedirs
-	        ;;
+			;;
 		"Add Alias's")
 			aliascheck
 			;;
-	    "Install Wordlists")
+		"Install Wordlists")
 			wordlists
 			;;
 		"Install APT Requirements")
@@ -382,7 +382,7 @@ select choice in "${choices[@]}"; do
 			installgo
 			;;
 		"Tools Menu")
-	        toolsmenu
+			toolsmenu
 			;;
 		"Do EVERYTHING")
 			echo
@@ -408,13 +408,13 @@ select choice in "${choices[@]}"; do
 			;;
 		"Script Version")
 			sver
-	        ;;
+			;;
 	"Exit")
 		echo "Exiting.."
 		exit
 		;;
-        *) echo "invalid option $REPLY";;
-    esac
+		*) echo "invalid option $REPLY";;
+	esac
 done
 }
 
@@ -428,9 +428,9 @@ select choice in "${choices[@]}"; do
 	case $choice in
 		"Install Anew (Go)")
 			installanew
-	        ;;
-	    "Install Amass")
- 	        installamass
+			;;
+		"Install Amass")
+ 			installamass
 			;;
 		"Install Aquatone")
 			installaqua
@@ -474,8 +474,8 @@ select choice in "${choices[@]}"; do
 		"Go Back")
 			topmenu
 		break
-	        ;;
-	    *) echo "invalid option $REPLY";;
+			;;
+		*) echo "invalid option $REPLY";;
 	esac
 done
 }
