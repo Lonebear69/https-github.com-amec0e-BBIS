@@ -55,7 +55,7 @@ EOF
 # Check for .zshrc
 	echo
 	echo "Adding Alias's to .zshrc"
-	if [ "$SHELL" = "/bin/.zshrc" ] || [ "$SHELL" = "/usr/bin/.zshrc" ] ; then
+	if [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ] ; then
 		cat << EOF >> $HOME/.zshrc
 
 # BugBounty Alias's by BBIS
