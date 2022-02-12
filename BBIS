@@ -164,7 +164,7 @@ pip3pathcheck () {
 		echo
 	fi
 
-	echo "Checking if HOME/.local/bin is already in the PATH + users default shell is Bash"
+	echo "Checking if HOME/.local/bin is already in the PATH + users default shell is ZSH"
 	echo
 	if  [[ :$PATH: != *:"$HOME/.local/bin":* ]] && [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ] ; then
 		echo >> $HOME/.zshrc
