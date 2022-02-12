@@ -20,7 +20,7 @@ Oh-my-zsh by default ships with the plug-in (git) enabled. All this does is add 
 
 ### Solution:
 
-Either remove the git from plugins= in your .zshrc or rename the alias for gau before running the script to avoid conflicts. 
+Either remove git from the plugins= in your .zshrc file or rename the alias for gau before running the script to avoid conflicts. 
 
 ## Tools:
 
