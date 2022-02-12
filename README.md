@@ -12,7 +12,7 @@ A script I wrote to help me automate the installation of tools I use for hunting
 . ./BBIS
 ```
 
-You do not need to use `sudo` unless you absolutely need to for some reason.
+You do not need to use `sudo` unless you absolutely need to for some reason. The script will `sudo` only the parts needed to install the tools.
 
 ### Note For Oh-My-Zsh Users:
 
