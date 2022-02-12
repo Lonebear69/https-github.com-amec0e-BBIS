@@ -5,7 +5,7 @@
 # 
 # Functions List (For my Reference)
 # 
-# aliascheck, aptinstalls, goshellcheck, pip3pathcheck, makedirs, installaqua, installanew, installamass, installarjun, installcrawpy, installferox, installffuf, installgitjacker, installgittools, installgo, installgau, installhttprobe, installwordlists sver
+# aliascheck, aptinstalls, goshellcheck, pip3pathcheck, makedirs, installaqua, installanew, installamass, installarjun, installcrawpy, installferox, installffuf, installgitjacker, installgittools, installlinkfinder, installgetjs installgo, installgau, installhttprobe, installwordlists sver
 # 
 # 
 
@@ -23,6 +23,7 @@ makedirs () {
 	mkdir $HOME/Bugbounty/tools/gitjacker
 	mkdir $HOME/Bugbounty/tools/gittools
 	mkdir $HOME/Bugbounty/tools/gau
+	mkdir $HOME/Bugbounty/tools/getjs
 	mkdir $HOME/Bugbounty/tools/httprobe
 }
 
@@ -47,6 +48,8 @@ alias gitjacker='$HOME/Bugbounty/tools/gitjacker/gitjacker'
 alias gittools-dumper='$HOME/Bugbounty/tools/gittools/dumper.sh'
 alias gittools-extractor='$HOME/Bugbounty/tools/gittools/extractor.sh'
 alias gau='$HOME/Bugbounty/tools/gau/gau'
+alias getJS='$HOME/Bugbounty/tools/getjs/getJS'
+alias linkfinder='python3 $HOME/Bugbounty/tools/linkfinder/linkfinder.py'
 alias httprobe='$HOME/Bugbounty/tools/httprobe'
 EOF
 		source $HOME/.bashrc
@@ -72,6 +75,8 @@ alias gitjacker='$HOME/Bugbounty/tools/gitjacker/gitjacker'
 alias gittools-dumper='$HOME/Bugbounty/tools/gittools/dumper.sh'
 alias gittools-extractor='$HOME/Bugbounty/tools/gittools/extractor.sh'
 alias gau='$HOME/Bugbounty/tools/gau/gau'
+alias getJS='$HOME/Bugbounty/tools/getjs/getJS'
+alias linkfinder='python3 $HOME/Bugbounty/tools/linkfinder/linkfinder.py'
 alias httprobe='$HOME/Bugbounty/tools/httprobe'
 EOF
 		source $HOME/.zshrc
@@ -88,6 +93,7 @@ aptinstalls () {
 	sudo apt install chromium-browser -y
 	sudo apt install git -y
 	sudo apt install python3-pip -y
+	sudo apt install build-essential -y
 	echo
 	echo "APT Requirements Installed!"
 }
@@ -96,7 +102,7 @@ aptinstalls () {
 
 sver () {
 	echo
-	echo "Version: 1.5"
+	echo "Version: 1.6"
 	echo
 }
 
@@ -123,7 +129,7 @@ goshellcheck () {
 
 # Check Just for ZSH Shell
 
-	echo "Checking if golang's bin is in the PATH + if the default shell is ZSH"
+	echo "Checking if golang's bin is in the PATH + if default shell is ZSH"
 	echo
 	if [[ :$PATH: != *:"/usr/local/go/bin":* ]] && [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ] ; then
 		echo >> $HOME/.zshrc
@@ -158,7 +164,7 @@ pip3pathcheck () {
 		echo
 	fi
 
-	echo "Checking if HOME/.local/bin is already in the PATH and users default shell is Bash"
+	echo "Checking if HOME/.local/bin is already in the PATH + users default shell is Bash"
 	echo
 	if  [[ :$PATH: != *:"$HOME/.local/bin":* ]] && [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ] ; then
 		echo >> $HOME/.zshrc
@@ -235,7 +241,7 @@ installcrawpy () {
 	git clone https://github.com/morph3/crawpy
 	cd crawpy
 	pip3 install -r requirements.txt
-	rm -rf .git .gitignore README.md
+	rm -rf .git .gitignore
 	cd $HOME
 	mv $HOME/crawpy $HOME/Bugbounty/tools/
 	echo
@@ -264,7 +270,7 @@ installaqua () {
 	cd /tmp
 	wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip
 	unzip aquatone_linux_amd64_1.7.0.zip
-	rm LICENSE.txt README.md aquatone_linux_amd64_1.7.0.zip
+	rm LICENSE.txt aquatone_linux_amd64_1.7.0.zip
 	mv aquatone $HOME/Bugbounty/tools/aquatone/
 	cd $HOME
 	echo
@@ -344,6 +350,37 @@ installgittools () {
 	echo "GitTools Installed!"
 }
 
+# GetJS
+
+installgetjs () {
+	echo
+	echo "Installing GetJS"
+	echo
+	go install -v github.com/003random/getJS@latest
+	mv $HOME/go/bin/getJS $HOME/Bugbounty/tools/getjs/
+	sudo rm -rf $HOME/go/
+	echo
+	echo "GetJS Installed!"
+}
+
+
+# LinkFinder
+
+installlinkfinder () {
+	echo
+	echo "Installing LinkFinder"
+	echo
+	cd $HOME/Bugbounty/tools
+	git clone https://github.com/GerbenJavado/LinkFinder.git
+	cd LinkFinder
+	pip3 install -r requirements.txt
+	rm Dockerfile LICENSE setup.py
+	cd $HOME
+	mv LinkFinder/ $HOME/Bugbounty/tools/linkfinder
+	echo
+	echo "LinkFinder Installed!"
+}
+
 
 # ------
 
@@ -368,7 +405,7 @@ installwordlists () {
 	echo
 	git clone https://github.com/danielmiessler/SecLists.git
 	cd SecLists
-	rm -rf .git .bin .gitignore .gitattributes README.md LICENSE CONTRIBUTING.md CONTRIBUTORS.md
+	rm -rf .git .bin .gitignore .gitattributes LICENSE CONTRIBUTING.md CONTRIBUTORS.md
 	cd $HOME
 	echo
 	echo "Seclists Installed!"
@@ -418,8 +455,10 @@ select choice in "${choices[@]}"; do
 			installferox
 			installffuf
 			installgau
+			installgetjs
 			installgitjacker
 			installgittools
+			installlinkfinder
 			installhttprobe
 			installwordlists
 			aliascheck
@@ -441,14 +480,14 @@ echo
 echo "		~~TOOLS MENU~~"
 echo 
 PS3='Please select an option: '
-choices=("Install Anew (Go)" "Install Amass" "Install Aquatone" "Install Arjun" "Install Crawpy" "Install Feroxbuster" "Install ffuf (Go)" "Install Gau (Go)" "Install Gitjacker (Go)" "Install GitTools" "Install HTTProbe (Go)" "Install ALL tools (REQUIRES GOLANG)" "Go Back")
+choices=("Install Anew (Go)" "Install Amass" "Install Aquatone" "Install Arjun" "Install Crawpy" "Install Feroxbuster" "Install ffuf (Go)" "Install Gau (Go)" "Install GetJS (Go)" "Install Gitjacker (Go)" "Install GitTools" "Install LinkFinder" "Install HTTProbe (Go)" "Install ALL tools (REQUIRES GOLANG)" "Go Back")
 select choice in "${choices[@]}"; do
 	case $choice in
 		"Install Anew (Go)")
 			installanew
 			;;
 		"Install Amass")
-			installamass
+ 			installamass
 			;;
 		"Install Aquatone")
 			installaqua
@@ -468,11 +507,17 @@ select choice in "${choices[@]}"; do
 		"Install Gau (Go)")
 			installgau
 			;;
+		"Install GetJS (Go)")
+			installgetjs
+			;;
 		"Install Gitjacker (Go)")
 			installgitjacker
 			;;
 		"Install GitTools")
 			installgittools
+			;;
+		"Install LinkFinder")
+			installlinkfinder
 			;;
 		"Install HTTProbe (Go)")
 			installhttprobe
@@ -487,8 +532,10 @@ select choice in "${choices[@]}"; do
 			installferox
 			installffuf
 			installgau
+			installgetjs
 			installgitjacker
 			installgittools
+			installlinkfinder
 			installhttprobe
 			installwordlists
 			aliascheck
@@ -503,7 +550,7 @@ done
 }
 
 echo
-echo "Welcome to Amec0es BugBounty Install Script (BBIS) v1.5"
+echo "Welcome to Amec0es BugBounty Install Script (BBIS) v1.6"
 echo
 
 topmenu
