@@ -1,5 +1,5 @@
 # BBIS
-BugBounty Install Script
+BugBounty Install Script Version: `1.6`
 
 ## Description:
 
