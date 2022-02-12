@@ -1,5 +1,6 @@
 # BBIS
 BugBounty Install Script Version: `1.6`
+Raspberry Pi BugBounty Install Script Version: `1.5`
 
 ## Description:
 
