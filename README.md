@@ -32,8 +32,10 @@ Either remove the git from plugins= in your .zshrc or rename the alias for gau b
  - Feroxbuster
  - Ffuf
  - Gau
+ - GetJS
  - Gitjacker (Not available in the Pi Version)
  - GitTools
+ - LinkFinder
  - Httprobe
  - SecLists + Assetnote Top 1m Parameters
 
@@ -43,3 +45,4 @@ Either remove the git from plugins= in your .zshrc or rename the alias for gau b
  - git
  - golang
  - chromium-browser
+ - build-essential (just in case)
